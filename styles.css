@@ -1,0 +1,66 @@
+.card {
+    width: 250px;
+    height: 250px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    transition: transform 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .card-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: #0aabc5;
+  }
+  
+  .card-chart-container {
+    margin-top: 10px;
+    position: relative;
+  }
+  
+  .line-chart {
+    width: 100%;
+    height: 80px;
+  }
+  
+  .chart-point:hover::after {
+    content: 'Peak Spend';
+    position: absolute;
+    background: black;
+    color: white;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  /*second concept*/
+  .card.dark {
+    background-color: #1c1c1e;
+    color: white;
+  }
+  
+  .card.dark .card-title {
+    color: #bbb;
+  }
+  
+  .card.dark .card-number {
+    color: #4facfe;
+  }
+  
