@@ -16,15 +16,19 @@
   }
   
   .card-title {
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: bold;
     color: #333;
+    text-align: center;
+    margin-bottom: 0.5rem;
   }
   
   .card-number {
     font-size: 28px;
     font-weight: bold;
     color: #0aabc5;
+    text-align: center;
+    margin-bottom: 0.5rem;
   }
   
   .card-chart-container {
