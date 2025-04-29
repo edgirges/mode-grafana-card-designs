@@ -155,9 +155,21 @@
 
     <h3>CARD 6</h3>
     <div class="gradient-card">
-        <div class="gradient-title">ROAS Monitor</div>
-        <div class="gradient-number">4.25x</div>
-        <div class="gradient-chart"><!-- fake data line or bars --></div>
+      <div class="gradient-title">ROAS Monitor</div>
+      <div class="gradient-number">4.25x</div>
+      <div class="gradient-chart">
+        <div class="gradient-bar" style="height: 40%" title="Mon: 3.8x"></div>
+        <div class="gradient-bar" style="height: 60%" title="Tue: 4.1x"></div>
+        <div class="gradient-bar" style="height: 75%" title="Wed: 4.3x"></div>
+        <div class="gradient-bar" style="height: 65%" title="Thu: 4.2x"></div>
+        <div class="gradient-bar" style="height: 80%" title="Fri: 4.5x"></div>
+        <div class="gradient-bar" style="height: 70%" title="Sat: 4.3x"></div>
+        <div class="gradient-bar" style="height: 55%" title="Sun: 4.0x"></div>
+      </div>
+      <div class="gradient-footer">
+        <div class="gradient-date">Last 7 days</div>
+        <div class="gradient-action">View details</div>
+      </div>
     </div>
 
     <h3>AREA CHART CARD</h3>
@@ -259,6 +271,59 @@
         </div>
       </div>
       
+
+      <h3>Global Metrics</h3>
+      <div class="global-metrics-card">
+        <div class="global-metrics-header">
+          <div class="global-metrics-title">101 - Conversion</div>
+          <div class="global-metrics-value">104033.00</div>
+          <div class="health-indicator good"></div>
+        </div>
+        <div class="global-metrics-chart-container">
+          <div class="y-axis">
+            <div class="y-axis-label">110K</div>
+            <div class="y-axis-label">105K</div>
+            <div class="y-axis-label">100K</div>
+            <div class="y-axis-label">95K</div>
+          </div>
+          <svg class="global-metrics-chart" viewBox="0 0 300 100" preserveAspectRatio="none">
+            <!-- Dashed baseline -->
+            <path 
+              d="M0,70 C30,72 60,71 90,70 C120,69 150,68 180,70 C210,72 240,71 270,70 L300,70" 
+              class="baseline-path"
+              stroke-dasharray="3,3" />
+            
+            <!-- Main line -->
+            <path 
+              d="M0,60 C30,40 60,30 90,50 C120,65 150,55 180,40 C210,30 240,50 270,60 L300,60" 
+              class="metrics-path" />
+            
+            <!-- Hover area (invisible but wider for easier interaction) -->
+            <path 
+              d="M0,60 C30,40 60,30 90,50 C120,65 150,55 180,40 C210,30 240,50 270,60 L300,60" 
+              class="hover-path" 
+              stroke-width="15" 
+              stroke-opacity="0" />
+          </svg>
+        </div>
+      </div>
+
+      <h3>Performance Dataflow</h3>
+      <div class="roas-card">
+        <div class="roas-title">ROAS</div>
+        <div class="roas-value">251</div>
+        <svg class="roas-chart" viewBox="0 0 95 40" preserveAspectRatio="none">
+            <!-- Y-axis starts at x = 0 -->
+            <line x1="0" y1="0" x2="0" y2="35" class="axis-line" />
+            <!-- X-axis from left edge to right edge -->
+            <line x1="0" y1="35" x2="95" y2="35" class="axis-line" />
+            <!-- Shift chart path to match new alignment -->
+            <path d="M0,30 L10,28 L20,27 L30,27 L40,27 L50,27 L60,27 L70,27 L80,27 L90,5 L95,25" class="roas-line" />
+          </svg>
+          
+      </div>
+      
+      
 </body>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -356,6 +421,104 @@
       splitCardPoint.addEventListener('mouseleave', function() {
         splitTooltip.style.display = 'none'; // Hide on leave
         splitTooltip.classList.remove('visible');
+      });
+    }
+
+    // Add this to your existing script
+    const gradientTooltip = document.createElement('div');
+    gradientTooltip.className = 'gradient-tooltip';
+    document.body.appendChild(gradientTooltip);
+
+    const gradientBars = document.querySelectorAll('.gradient-bar');
+    gradientBars.forEach(bar => {
+      bar.addEventListener('mouseenter', function(e) {
+        gradientTooltip.textContent = this.getAttribute('title');
+        gradientTooltip.style.display = 'block';
+        gradientTooltip.style.left = (e.clientX + 10) + 'px';
+        gradientTooltip.style.top = (e.clientY - 30) + 'px';
+      });
+      
+      bar.addEventListener('mousemove', function(e) {
+        gradientTooltip.style.left = (e.clientX + 10) + 'px';
+        gradientTooltip.style.top = (e.clientY - 30) + 'px';
+      });
+      
+      bar.addEventListener('mouseleave', function() {
+        gradientTooltip.style.display = 'none';
+      });
+    });
+
+    // Global Metrics tooltips
+    const metricsTooltip = document.createElement('div');
+    metricsTooltip.className = 'metrics-tooltip';
+    document.body.appendChild(metricsTooltip);
+
+    const healthTooltip = document.createElement('div');
+    healthTooltip.className = 'health-tooltip';
+    healthTooltip.innerHTML = `
+      <div class="health-tooltip-title">Health Score</div>
+      <div>System is operating normally</div>
+      <div class="health-score">
+        <div class="health-score-label">Score:</div>
+        <div class="health-score-bar">
+          <div class="health-score-value" style="width: 92%"></div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(healthTooltip);
+
+    // Line chart tooltip
+    const hoverPath = document.querySelector('.hover-path');
+    if (hoverPath) {
+      hoverPath.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const percentage = x / rect.width;
+        
+        // Calculate a value based on position
+        const min = 95000;
+        const max = 110000;
+        const value = Math.round(min + (max - min) * (1 - percentage));
+        
+        // Generate a date based on position (last 30 days)
+        const today = new Date();
+        const daysAgo = Math.round(30 * percentage);
+        const date = new Date(today);
+        date.setDate(today.getDate() - daysAgo);
+        const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        
+        // Update tooltip content
+        metricsTooltip.innerHTML = `
+          <div class="tooltip-date">${formattedDate}</div>
+          <div class="tooltip-value">${value.toLocaleString()}</div>
+        `;
+        
+        // Get tooltip dimensions after content update
+        metricsTooltip.style.display = 'block';
+        const tooltipWidth = metricsTooltip.offsetWidth;
+        
+        // Position tooltip centered above cursor
+        metricsTooltip.style.left = (e.clientX - tooltipWidth/2) + 'px';
+        metricsTooltip.style.top = (e.clientY - 70) + 'px';
+      });
+      
+      hoverPath.addEventListener('mouseleave', function() {
+        metricsTooltip.style.display = 'none';
+      });
+    }
+
+    // Health indicator tooltip
+    const healthIndicator = document.querySelector('.health-indicator');
+    if (healthIndicator) {
+      healthIndicator.addEventListener('mouseenter', function(e) {
+        const rect = this.getBoundingClientRect();
+        healthTooltip.style.display = 'block';
+        healthTooltip.style.left = (rect.left - 100) + 'px';
+        healthTooltip.style.top = (rect.bottom + 10) + 'px';
+      });
+      
+      healthIndicator.addEventListener('mouseleave', function() {
+        healthTooltip.style.display = 'none';
       });
     }
   });
