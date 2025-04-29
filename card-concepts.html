@@ -4,26 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grafana Cards POC</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/edgirges/mode-grafana-card-designs@main/styles.css?v=e9b0620">
+    <link rel="stylesheet" href="styles.css?v=1.1">
 </head>
 <body>
     <h1>Grafana Cards POC</h1>
 
     <h2>CARD 1</h2>
     <div class="card">
-      <div class="card-title">Blocked Publisher Spend</div>
-      <div class="card-number">$12,340</div>
+      <div class="card-header">
+        <div class="card-title">Blocked Publisher Spend</div>
+      </div>
+      <div class="card-number-container">
+        <div class="card-number">$12,340</div>
+      </div>
       <div class="card-chart-container">
         <svg viewBox="0 0 100 50" class="line-chart">
+          <defs>
+            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#0aabc5" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="#0aabc5" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path 
+            d="M0,40 20,30 40,20 60,25 80,15 100,20 L100,50 L0,50 Z"
+            fill="url(#areaGradient)"
+          />
           <polyline 
             points="0,40 20,30 40,20 60,25 80,15 100,20"
             fill="none"
             stroke="#0aabc5"
-            stroke-width="2"
+            stroke-width="1.5"
           />
-          <circle cx="80" cy="15" r="2" class="chart-point" />
-          <title>Spend peaked here</title>
+          <circle cx="80" cy="15" r="3" class="chart-point" />
+          <div class="chart-tooltip">Peak: $15,200</div>
         </svg>
+      </div>
+      <div class="card-footer">
+        <div class="card-action-icon">→</div>
       </div>
     </div>
 
@@ -78,6 +95,199 @@
     </div>
 
     <h2>CARD 4</h2>
+
+    <div class="dashboard-card">
+      <div class="dashboard-header">
+        <div class="dashboard-title">Blocked Publishers</div>
+        <div class="dashboard-badge">Alert</div>
+      </div>
+      <div class="dashboard-number">$1,245</div>
+      <div class="dashboard-chart-container">
+        <div class="dashboard-chart-label">Last 7 days</div>
+        <svg class="dashboard-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="dashboardGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#6366F1" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="#6366F1" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path d="M0,30 L15,28 L30,25 L45,20 L60,15 L75,10 L90,5 L100,8 L100,40 L0,40 Z" 
+                fill="url(#dashboardGradient)" class="dashboard-area"></path>
+          <path d="M0,30 L15,28 L30,25 L45,20 L60,15 L75,10 L90,5 L100,8" 
+                class="dashboard-line"></path>
+          <circle cx="90" cy="5" r="2" class="dashboard-point"></circle>
+        </svg>
+      </div>
+      <div class="dashboard-footer">
+        <div class="dashboard-stat">
+          <span class="dashboard-stat-value">+12%</span>
+          <span class="dashboard-stat-label">vs last week</span>
+        </div>
+      </div>
+    </div>
+
+
     <h2>CARD 5</h2>
+
+    <div class="terminal-card">
+        <div class="terminal-title">CTR Alert</div>
+        <div class="terminal-number">3.45%</div>
+        <div class="terminal-chart"><!-- fake line chart or bars --></div>
+    </div>
+
+    <h3>CARD 6</h3>
+    <div class="gradient-card">
+        <div class="gradient-title">ROAS Monitor</div>
+        <div class="gradient-number">4.25x</div>
+        <div class="gradient-chart"><!-- fake data line or bars --></div>
+    </div>
+
+    <h3>AREA CHART CARD</h3>
+    <div class="dark-area-card">
+        <div class="dark-area-title">GA4 Sessions Monitor</div>
+        <div class="dark-area-number">18,732</div>
+        <svg class="area-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+          <!-- Filled Area -->
+          <path d="M0,30 L10,20 L30,25 L50,10 L70,15 L90,5 L100,15 L100,40 L0,40 Z" 
+                class="area-fill"></path>
+          <!-- Line Chart -->
+          <path d="M0,30 L10,20 L30,25 L50,10 L70,15 L90,5 L100,15" 
+                class="area-line"></path>
+        </svg>
+      </div>
+
+      <h3>MINIMALIST CARD</h3>
+      <div class="minimal-trend-card">
+        <div class="minimal-title">CTR Monitor</div>
+        <div class="minimal-number">2.4%</div>
+        <svg class="minimal-line-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+          <path d="M0,35 L20,30 L40,25 L60,15 L80,20 L100,10" class="minimal-line"></path>
+        </svg>
+      </div>
+      
+      <h3>MINIMALIST CARD</h3>
+      <div class="neumorphic-card">
+        <div class="neumorphic-title">Conversion Rate</div>
+        <div class="neumorphic-number">8.7%</div>
+        <div class="neumorphic-chart-container">
+          <svg class="neumorphic-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+            <path d="M0,30 L20,25 L40,15 L60,20 L80,10 L100,5" class="neumorphic-line"></path>
+            <circle cx="80" cy="10" r="2" class="neumorphic-point"></circle>
+          </svg>
+        </div>
+      </div>
+
+      <h3>MINIMALIST CARD</h3>
+      <div class="retro-card">
+        <div class="retro-title">Ad Frequency</div>
+        <div class="retro-number">3.2x</div>
+        <div class="retro-chart-container">
+          <svg class="retro-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+            <path d="M0,30 L20,32 L40,25 L60,28 L80,15 L100,18" class="retro-line"></path>
+            <circle cx="80" cy="15" r="2" class="retro-point"></circle>
+          </svg>
+          <div class="retro-grid"></div>
+        </div>
+      </div>
+
+      <h3>MINIMALIST CARD</h3>
+      <div class="paper-card">
+        <div class="paper-title">Campaign Reach</div>
+        <div class="paper-number">1.2M</div>
+        <div class="paper-chart-container">
+          <svg class="paper-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="paperGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ff7e5f" stop-opacity="0.7" />
+                <stop offset="100%" stop-color="#ff7e5f" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <path d="M0,35 L20,30 L40,25 L60,15 L80,10 L100,5 L100,40 L0,40 Z" fill="url(#paperGradient)" class="paper-area"></path>
+            <path d="M0,35 L20,30 L40,25 L60,15 L80,10 L100,5" class="paper-line"></path>
+            <circle cx="80" cy="10" r="2" class="paper-point"></circle>
+          </svg>
+        </div>
+      </div>
+
+      <h3>BAR CHART INSIGHT CARD</h3>
+      <div class="bar-card">
+        <div class="bar-title">Conversions</div>
+        <div class="bar-number">532</div>
+        <div class="bar-chart">
+          <div class="bar" style="height: 30%"></div>
+          <div class="bar" style="height: 60%"></div>
+          <div class="bar" style="height: 80%"></div>
+          <div class="bar" style="height: 40%"></div>
+          <div class="bar" style="height: 70%"></div>
+        </div>
+      </div>
+      
+      <h3>RADIAL PROGRESS CARD</h3>
+      <div class="radial-card">
+        <div class="radial-title">Budget Usage</div>
+        <div class="radial-progress">
+          <svg viewBox="0 0 36 36" class="circular-chart">
+            <path class="circle-bg"
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path class="circle"
+              stroke-dasharray="75, 100"
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <text x="18" y="20.35" class="percentage">75%</text>
+          </svg>
+        </div>
+      </div>
+      
 </body>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const card1Chart = document.querySelector('.card .line-chart');
+    const tooltip = document.createElement('div');
+    tooltip.className = 'hover-tooltip';
+    tooltip.style.display = 'none';
+    document.body.appendChild(tooltip);
+    
+    // Chart dimensions and data
+    const chartWidth = 100;
+    const chartHeight = 50;
+    const dataPoints = [
+      {x: 0, y: 40, value: '$8,200'},
+      {x: 20, y: 30, value: '$9,800'},
+      {x: 40, y: 20, value: '$11,500'},
+      {x: 60, y: 25, value: '$10,900'},
+      {x: 80, y: 15, value: '$15,200'},
+      {x: 100, y: 20, value: '$13,800'}
+    ];
+    
+    card1Chart.addEventListener('mousemove', function(e) {
+      const rect = card1Chart.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width * chartWidth;
+      
+      // Find closest data point
+      let closestPoint = dataPoints[0];
+      let minDistance = Math.abs(x - closestPoint.x);
+      
+      for (let i = 1; i < dataPoints.length; i++) {
+        const distance = Math.abs(x - dataPoints[i].x);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestPoint = dataPoints[i];
+        }
+      }
+      
+      // Position tooltip
+      tooltip.style.display = 'block';
+      tooltip.textContent = closestPoint.value;
+      tooltip.style.left = (e.clientX + 10) + 'px';
+      tooltip.style.top = (e.clientY - 30) + 'px';
+    });
+    
+    card1Chart.addEventListener('mouseleave', function() {
+      tooltip.style.display = 'none';
+    });
+  });
+</script>
 </html>
