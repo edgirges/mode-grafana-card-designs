@@ -923,3 +923,143 @@ body {
   box-shadow: 0 2px 8px rgba(0, 242, 254, 0.3); /* Glow effect */
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+/* Split Card Design */
+.split-card {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(to right, #ffffff 50%, #f9f9ff 50%);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(142, 45, 226, 0.1);
+  display: flex;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.split-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(142, 45, 226, 0.15);
+}
+
+.split-card-left {
+  width: 50%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border-right: 1px solid #f0f0f0;
+}
+
+.split-card-right {
+  width: 50%;
+  padding: 20px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: none;
+}
+
+.split-card-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.split-card-number {
+  font-size: 36px;
+  font-weight: 700;
+  color: #333;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.split-card-percent {
+  font-size: 20px;
+  font-weight: 500;
+  color: #666;
+}
+
+.split-card-trend {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 12px;
+  margin-top: 5px;
+}
+
+.split-card-trend.positive {
+  background-color: rgba(74, 222, 128, 0.1);
+  color: #22c55e;
+}
+
+.split-card-trend.negative {
+  background-color: rgba(248, 113, 113, 0.1);
+  color: #ef4444;
+}
+
+.trend-arrow {
+  margin-right: 4px;
+}
+
+.split-card-label {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.split-card-chart {
+  width: 100%;
+  height: 100px;
+  margin-top: 5px;
+  overflow: visible;
+}
+
+.split-card-path {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: dash 1.5s ease-in-out forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.split-card-point {
+  fill: #8e2de2;
+  transition: r 0.2s ease;
+}
+
+.split-card-point:hover {
+  r: 6;
+  cursor: pointer;
+}
+
+/* Split Card Tooltip */
+.split-tooltip {
+  position: fixed;
+  background: linear-gradient(135deg, #8e2de2, #4a00e0);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(74, 0, 224, 0.3);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.split-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
