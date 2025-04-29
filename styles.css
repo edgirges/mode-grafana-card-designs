@@ -172,14 +172,47 @@ body {
   .card.dark {
     background-color: #1c1c1e;
     color: white;
+    padding: 16px;
   }
   
   .card.dark .card-title {
     color: #bbb;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
   }
   
   .card.dark .card-number {
     color: #4facfe;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .card.dark .card-chart-container {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    flex-grow: 1;
+  }
+  
+  .dark-point {
+    fill: #4facfe;
+    transition: r 0.2s;
+  }
+  
+  .dark-point:hover {
+    r: 4;
+    fill: #00f2fe;
+  }
+  
+  .dark-icon {
+    background-color: #3a3a3c;
+    color: #4facfe;
+  }
+  
+  .dark-icon:hover {
+    background-color: #4facfe;
+    color: #1c1c1e;
   }
   
   /*glass concept*/
@@ -874,4 +907,19 @@ body {
   z-index: 1000;
   white-space: nowrap;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom tooltip for dark mode card */
+.dark-tooltip {
+  position: fixed;
+  background-color: rgba(79, 172, 254, 0.9); /* Using the card's accent color */
+  color: #000; /* Dark text for contrast */
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 242, 254, 0.3); /* Glow effect */
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }

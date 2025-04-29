@@ -45,25 +45,40 @@
     </div>
 
     <h2>CARD 2</h2>
-
     <div class="card dark">
-      <div class="card-title">GA4 Sessions Monitor</div>
-      <div class="card-number">23,400</div>
+      <div class="card-header">
+        <div class="card-title">GA4 Sessions Monitor</div>
+      </div>
+      <div class="card-number-container">
+        <div class="card-number">23,400</div>
+      </div>
       <div class="card-chart-container">
         <svg viewBox="0 0 100 50" class="line-chart">
-          <polyline 
-            points="0,45 20,35 40,30 60,25 80,20 100,18"
-            fill="none"
-            stroke="url(#gradient)"
-            stroke-width="2"
-          />
           <defs>
+            <linearGradient id="areaGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4facfe" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="#4facfe" stop-opacity="0" />
+            </linearGradient>
             <linearGradient id="gradient" x1="0" y1="0" x2="100%" y2="0">
               <stop offset="0%" stop-color="#4facfe" />
               <stop offset="100%" stop-color="#00f2fe" />
             </linearGradient>
           </defs>
+          <path 
+            d="M0,45 20,35 40,30 60,25 80,20 100,18 L100,50 L0,50 Z"
+            fill="url(#areaGradientDark)"
+          />
+          <polyline 
+            points="0,45 20,35 40,30 60,25 80,20 100,18"
+            fill="none"
+            stroke="url(#gradient)"
+            stroke-width="1.5"
+          />
+          <circle cx="80" cy="20" r="3" class="chart-point dark-point" />
         </svg>
+      </div>
+      <div class="card-footer">
+        <div class="card-action-icon dark-icon">→</div>
       </div>
     </div>
 
@@ -244,50 +259,75 @@
 </body>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const card1Chart = document.querySelector('.card .line-chart');
+    // Data for both charts
+    const chartData = {
+      'card1': [
+        {x: 0, y: 40, value: '$8,200'},
+        {x: 20, y: 30, value: '$9,800'},
+        {x: 40, y: 20, value: '$11,500'},
+        {x: 60, y: 25, value: '$10,900'},
+        {x: 80, y: 15, value: '$15,200'},
+        {x: 100, y: 20, value: '$13,800'}
+      ],
+      'card2': [
+        {x: 0, y: 45, value: '18,500'},
+        {x: 20, y: 35, value: '20,200'},
+        {x: 40, y: 30, value: '21,800'},
+        {x: 60, y: 25, value: '22,500'},
+        {x: 80, y: 20, value: '23,400'},
+        {x: 100, y: 18, value: '24,100'}
+      ]
+    };
+    
+    // Create tooltips
     const tooltip = document.createElement('div');
     tooltip.className = 'hover-tooltip';
     tooltip.style.display = 'none';
     document.body.appendChild(tooltip);
     
-    // Chart dimensions and data
-    const chartWidth = 100;
-    const chartHeight = 50;
-    const dataPoints = [
-      {x: 0, y: 40, value: '$8,200'},
-      {x: 20, y: 30, value: '$9,800'},
-      {x: 40, y: 20, value: '$11,500'},
-      {x: 60, y: 25, value: '$10,900'},
-      {x: 80, y: 15, value: '$15,200'},
-      {x: 100, y: 20, value: '$13,800'}
-    ];
+    const darkTooltip = document.createElement('div');
+    darkTooltip.className = 'dark-tooltip';
+    darkTooltip.style.display = 'none';
+    document.body.appendChild(darkTooltip);
     
-    card1Chart.addEventListener('mousemove', function(e) {
-      const rect = card1Chart.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width * chartWidth;
+    // Setup tooltips for both charts
+    setupChartTooltip('.card:not(.dark) .line-chart', 'card1', tooltip);
+    setupChartTooltip('.card.dark .line-chart', 'card2', darkTooltip);
+    
+    function setupChartTooltip(selector, dataKey, tooltipElement) {
+      const chart = document.querySelector(selector);
+      if (!chart) return;
       
-      // Find closest data point
-      let closestPoint = dataPoints[0];
-      let minDistance = Math.abs(x - closestPoint.x);
+      const dataPoints = chartData[dataKey];
+      const chartWidth = 100;
       
-      for (let i = 1; i < dataPoints.length; i++) {
-        const distance = Math.abs(x - dataPoints[i].x);
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestPoint = dataPoints[i];
+      chart.addEventListener('mousemove', function(e) {
+        const rect = chart.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width * chartWidth;
+        
+        // Find closest data point
+        let closestPoint = dataPoints[0];
+        let minDistance = Math.abs(x - closestPoint.x);
+        
+        for (let i = 1; i < dataPoints.length; i++) {
+          const distance = Math.abs(x - dataPoints[i].x);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestPoint = dataPoints[i];
+          }
         }
-      }
+        
+        // Position tooltip
+        tooltipElement.style.display = 'block';
+        tooltipElement.textContent = closestPoint.value;
+        tooltipElement.style.left = (e.clientX + 10) + 'px';
+        tooltipElement.style.top = (e.clientY - 30) + 'px';
+      });
       
-      // Position tooltip
-      tooltip.style.display = 'block';
-      tooltip.textContent = closestPoint.value;
-      tooltip.style.left = (e.clientX + 10) + 'px';
-      tooltip.style.top = (e.clientY - 30) + 'px';
-    });
-    
-    card1Chart.addEventListener('mouseleave', function() {
-      tooltip.style.display = 'none';
-    });
+      chart.addEventListener('mouseleave', function() {
+        tooltipElement.style.display = 'none';
+      });
+    }
   });
 </script>
 </html>
